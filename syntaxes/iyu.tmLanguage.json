@@ -1,0 +1,161 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "iyu",
+  "scopeName": "source.iyu",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#closing-tag" },
+    { "include": "#ppt" },
+    { "include": "#event" },
+    { "include": "#event-item" },
+    { "include": "#open-tag" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "begin": "<!--",
+          "end": "-->",
+          "name": "comment.block.iyu"
+        },
+        {
+          "match": "//.*$",
+          "name": "comment.line.double-slash.iyu"
+        }
+      ]
+    },
+    "tag-name": {
+      "patterns": [
+        {
+          "match": "(?<=</?)([A-Za-z][\\w]*)",
+          "name": "entity.name.tag.iyu"
+        }
+      ]
+    },
+    "closing-tag": {
+      "match": "(</)([A-Za-z][\\w]*)(\\s*)(>)",
+      "captures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" },
+        "4": { "name": "punctuation.definition.tag.end.iyu" }
+      }
+    },
+    "attributes": {
+      "patterns": [
+        {
+          "match": "([\\w-]+)(\\s*)(=)(\\s*)(\"[^\"]*\")",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.iyu" },
+            "3": { "name": "punctuation.separator.key-value.iyu" },
+            "5": { "name": "string.quoted.double.iyu" }
+          }
+        }
+      ]
+    },
+    "ppt": {
+      "begin": "(<)(ppt)(\\s*)(>)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" },
+        "3": { "name": "punctuation.definition.tag.end.iyu" }
+      },
+      "end": "(</)(ppt)(\\s*)(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" },
+        "3": { "name": "punctuation.definition.tag.end.iyu" }
+      },
+      "patterns": [
+        {
+          "match": "([A-Za-z_][\\w-]*)\\s*=\\s*(#[0-9A-Fa-f]{3,8})(?=\\s*(?:</ppt>|$))",
+          "captures": {
+            "1": { "name": "support.type.property-name.iyu" },
+            "2": { "name": "constant.other.color.iyu" }
+          }
+        },
+        {
+          "match": "([A-Za-z_][\\w-]*)\\s*=\\s*([^<\\r\\n]+?)\\s*(?=</ppt>|$)",
+          "captures": {
+            "1": { "name": "support.type.property-name.iyu" },
+            "2": { "name": "string.unquoted.iyu" }
+          }
+        }
+      ]
+    },
+    "event": {
+      "begin": "(<)(event)(\\s*)(>)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" },
+        "3": { "name": "punctuation.definition.tag.end.iyu" }
+      },
+      "end": "(</)(event)(\\s*)(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" },
+        "3": { "name": "punctuation.definition.tag.end.iyu" }
+      },
+      "patterns": [
+        {
+          "match": "^\\s*([A-Za-z_][\\w-]*)\\s*=\\s*(.*)$",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.iyu" },
+            "2": { "name": "string.unquoted.iyu" }
+          }
+        }
+      ]
+    },
+    "event-item": {
+      "begin": "(<)(eventItme)(\\s+)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" }
+      },
+      "end": "(</)(eventItme)(\\s*)(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" },
+        "4": { "name": "punctuation.definition.tag.end.iyu" }
+      },
+      "patterns": [
+        { "include": "#attributes" },
+        { "include": "#event-body" }
+      ]
+    },
+    "event-body": {
+      "patterns": [
+        {
+          "match": "\\b(call|addv)\\b",
+          "name": "support.function.iyu"
+        },
+        {
+          "match": "\"[^\"]*\"",
+          "name": "string.quoted.double.iyu"
+        },
+        {
+          "match": "\\b(null|true|false)\\b",
+          "name": "constant.language.iyu"
+        },
+        {
+          "match": "\\b\\d+\\b",
+          "name": "constant.numeric.iyu"
+        }
+      ]
+    },
+    "open-tag": {
+      "begin": "(<)([A-Za-z][\\w]*)(?=[\\s>/])",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.iyu" },
+        "2": { "name": "entity.name.tag.iyu" }
+      },
+      "end": "(/?)(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.iyu" },
+        "2": { "name": "punctuation.definition.tag.end.iyu" }
+      },
+      "patterns": [
+        { "include": "#attributes" }
+      ]
+    }
+  }
+}

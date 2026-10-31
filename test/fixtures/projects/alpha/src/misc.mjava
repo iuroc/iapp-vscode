@@ -1,0 +1,3 @@
+public void runAll() {
+	i.call("mjava", "home.first");
+}

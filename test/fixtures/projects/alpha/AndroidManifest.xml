@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<iapp>
+<title>Alpha</title>
+<packageName>com.fixture.alpha</packageName>
+<versionName>1.2</versionName>
+<versionint>3</versionint>
+<sdk>34</sdk>
+<Permissions>android.permission.INTERNET
+android.permission.CAMERA</Permissions>
+</iapp>

@@ -1,0 +1,16 @@
+public void first() {
+	i.fn("ui");
+	second();
+	i.call("mjava", "ui.ui_row");
+	i.uigo("search.iyu");
+}
+
+public void second() {
+	ui_col();
+}
+
+public void second(int n) {
+}
+
+public void shared() {
+}

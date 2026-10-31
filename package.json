@@ -1,0 +1,170 @@
+{
+  "name": "iapp-vscode",
+  "displayName": "iApp 开发助手",
+  "description": "iApp 工程（.mjava / .iyu）的导航、查阅与诊断",
+  "version": "0.7.0",
+  "publisher": "iuroc",
+  "type": "commonjs",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "iapp",
+    "mjava",
+    "iyu",
+    "android",
+    "java"
+  ],
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iuroc/iapp-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iuroc/iapp-vscode/issues"
+  },
+  "homepage": "https://github.com/iuroc/iapp-vscode#readme",
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:mjava",
+    "onLanguage:iyu",
+    "onView:iapp.projectTree"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "mjava",
+        "aliases": [
+          "mjava",
+          "iApp mjava"
+        ],
+        "extensions": [
+          ".mjava"
+        ],
+        "configuration": "./language-configuration/mjava.json"
+      },
+      {
+        "id": "iyu",
+        "aliases": [
+          "iyu",
+          "iApp iyu"
+        ],
+        "extensions": [
+          ".iyu"
+        ],
+        "configuration": "./language-configuration/iyu.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "mjava",
+        "scopeName": "source.mjava",
+        "path": "./syntaxes/mjava.tmLanguage.json"
+      },
+      {
+        "language": "iyu",
+        "scopeName": "source.iyu",
+        "path": "./syntaxes/iyu.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "iApp 开发助手",
+      "properties": {
+        "iapp.jdkHome": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "JDK 根目录（需包含 lib/src.zip）；留空时自动探测 JAVA_HOME 与常见安装路径"
+        },
+        "iapp.androidSources": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "Android 源码目录（例如 sources/android-34）；留空时从 ANDROID_HOME / ANDROID_SDK_ROOT 探测"
+        },
+        "iapp.extraSourceJars": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "scope": "machine-overridable",
+          "description": "额外的源码 jar（AndroidX / Material sources 等），按数组顺序参与索引"
+        },
+        "iapp.lint.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用 iApp 诊断"
+        },
+        "iapp.lint.disabledRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "关闭的规则 ID 列表，例如 IAPP-ARITY"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "iapp.projectTree",
+          "name": "iApp 工程"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "iapp.openLocation",
+        "title": "打开 iApp 位置"
+      },
+      {
+        "command": "iapp.refreshProjects",
+        "title": "刷新 iApp 工程",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "iapp.installAndroidSources",
+        "title": "iApp: 安装 Android 源码"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "iapp.refreshProjects",
+          "when": "view == iapp.projectTree",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "package": "npx @vscode/vsce package",
+    "compile": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "pretest": "tsc -p tsconfig.test.json",
+    "test": "node --test \"out-test/**/*.test.js\"",
+    "build-test": "tsc -p tsconfig.test.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.90.0",
+    "@types/yauzl": "^3.4.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.7.0",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
+  },
+  "dependencies": {
+    "@lezer/common": "^1.5.5",
+    "@lezer/java": "^1.1.5",
+    "yauzl": "^3.4.0"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "mjava",
+  "scopeName": "source.mjava",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#annotations" },
+    { "include": "#declarations" },
+    { "include": "#modifiers" },
+    { "include": "#keywords" },
+    { "include": "#primitive-types" },
+    { "include": "#method-declaration" },
+    { "include": "#method-call" },
+    { "include": "#type-names" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "begin": "/\\*\\*",
+          "end": "\\*/",
+          "name": "comment.block.documentation.mjava"
+        },
+        {
+          "begin": "/\\*",
+          "end": "\\*/",
+          "name": "comment.block.mjava"
+        },
+        {
+          "match": "//.*$",
+          "name": "comment.line.double-slash.mjava"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "\"",
+          "end": "\"",
+          "name": "string.quoted.double.mjava",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.mjava"
+            }
+          ]
+        },
+        {
+          "begin": "'",
+          "end": "'",
+          "name": "string.quoted.single.mjava",
+          "patterns": [
+            {
+              "match": "\\\\.",
+              "name": "constant.character.escape.mjava"
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "match": "\\b0[xX][0-9a-fA-F_]+[lL]?\\b",
+          "name": "constant.numeric.hex.mjava"
+        },
+        {
+          "match": "\\b\\d[\\d_]*(?:\\.[\\d_]+)?(?:[eE][+-]?[\\d_]+)?[fFdDlL]?\\b",
+          "name": "constant.numeric.mjava"
+        }
+      ]
+    },
+    "annotations": {
+      "match": "@[A-Za-z_$][\\w$.]*",
+      "name": "storage.type.annotation.mjava"
+    },
+    "declarations": {
+      "match": "\\b(class|interface|enum|extends|implements|package|import|throws)\\b",
+      "name": "keyword.declaration.mjava"
+    },
+    "modifiers": {
+      "match": "\\b(public|private|protected|static|final|abstract|synchronized|native|transient|volatile|strictfp)\\b",
+      "name": "storage.modifier.mjava"
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "match": "\\b(true|false|null)\\b",
+          "name": "constant.language.mjava"
+        },
+        {
+          "match": "\\b(if|else|for|while|do|switch|case|default|break|continue|return|throw|try|catch|finally|assert|instanceof|new|this|super)\\b",
+          "name": "keyword.control.mjava"
+        }
+      ]
+    },
+    "primitive-types": {
+      "match": "\\b(boolean|byte|char|short|int|long|float|double|void)\\b",
+      "name": "support.type.primitive.mjava"
+    },
+    "method-declaration": {
+      "match": "(?<![\\w$.])((?:(?:public|private|protected|static|final|abstract|synchronized|native|strictfp)\\s+)*)(void|boolean|byte|char|short|int|long|float|double|[A-Z][\\w$.]*(?:\\s*<[^;{}()]*>)?(?:\\s*\\[\\s*\\])*)\\s+([A-Za-z_$][\\w$]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "storage.modifier.mjava" },
+        "2": { "name": "storage.type.mjava" },
+        "3": { "name": "entity.name.function.mjava" }
+      }
+    },
+    "method-call": {
+      "patterns": [
+        {
+          "match": "\\b([a-z_$][\\w$]*)\\s*(?=\\()",
+          "captures": {
+            "1": { "name": "variable.function.mjava" }
+          }
+        },
+        {
+          "match": "(?<=\\.)([A-Za-z_$][\\w$]*)\\s*(?=\\()",
+          "captures": {
+            "1": { "name": "variable.function.mjava" }
+          }
+        }
+      ]
+    },
+    "type-names": {
+      "match": "\\b[A-Z][A-Za-z0-9_$]*\\b",
+      "name": "support.class.mjava"
+    },
+    "operators": {
+      "match": "[-+*/%=<>!&|^~?:]+",
+      "name": "keyword.operator.mjava"
+    }
+  }
+}

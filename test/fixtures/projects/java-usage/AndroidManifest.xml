@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<iapp>
+<title>JavaUsage</title>
+<packageName>com.fixture.javausage</packageName>
+<versionName>1.0</versionName>
+<versionint>1</versionint>
+<sdk>34</sdk>
+</iapp>

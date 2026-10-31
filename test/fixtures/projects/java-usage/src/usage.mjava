@@ -1,0 +1,7 @@
+import android.widget.TextView;
+
+public void run(TextView tv, TextView other) {
+	tv.setText("x");
+	other.setText(1);
+	tv.getId();
+}
